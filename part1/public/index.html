@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dog of the Day</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    body {
+      font-family: Comic Sans MS, cursive;
+      background-color: grey;      
+      color: black;
+      
+    }
+
+    .button {
+      margin: 50px;
+      padding: 30px;
+      font-size: 2rem;
+      background: linear-gradient(to right, red, yellow);
+      border-radius: 25px;
+    }
+
+    .dog-img {
+      width: 100%;
+      height: auto;
+      border: 10px dotted purple;
+      transform: rotate(10deg);
+    }
+
+    .details {
+      font-size: 2rem;
+      color: #ff0;
+      background-color: rgba(0,0,0,0.6);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button class="button" @click="fetchDog">CLICK ME TO SEE A DOG!</button>
+    <img :src="dogImage" class="dog-img" :alt="dogName" />
+    <div class="details">
+      <p><strong>Name:</strong> {{ dogName }}</p>
+      <p><strong>Breed:</strong> Totally Random</p>
+      <p><strong>Description:</strong> The best dog ever!!!</p>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          dogImage: '',
+          dogName: 'Borky McBarkface'
+        };
+      },
+      methods: {
+        fetchDog() {
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(res => res.json())
+            .then(data => {
+              this.dogImage = data.message;
+            });
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
